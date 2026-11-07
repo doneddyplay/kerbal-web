@@ -477,15 +477,15 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       <details class="portals">
         <summary>Portales de KSS2: dónde están y a dónde llevan</summary>
         <table>
-          <tr><th>Portal</th><th>Sistema</th><th>Dónde está</th><th>Lleva a</th></tr>
-          <tr><td>KRB-E01</td><td>Kerbol</td><td>Eeloo (orbita Sarnus), 539 km de altura</td><td>NKA-BX0 (Nova Kirbani)</td></tr>
-          <tr><td>NKA-BX0</td><td>Nova Kirbani</td><td>Centro de Nova Kirbani, 74.9 millones de km</td><td>KRB-E01 (Kerbol)</td></tr>
-          <tr><td>GATE-AE-G01</td><td>Aethera</td><td>Aethera, 4.74 millones de km</td><td>GATE-KOR-M05 (Kormin)</td></tr>
-          <tr><td>GATE-KOR-M05</td><td>Kormin</td><td>Kormin, 20,000 km</td><td>GATE-AE-G01 (Aethera)</td></tr>
-          <tr><td>GATE-KER-X1</td><td>Kerr</td><td>Kerr, 12.4 millones de km</td><td>GATE-SEE-K1 (Seereon)</td></tr>
-          <tr><td>GATE-SEE-K1</td><td>Seereon</td><td>Seereon B, 98,765 km</td><td>GATE-KER-X1 (Kerr)</td></tr>
+          <tr><th>Portal</th><th>Sistema</th><th>Su órbita</th><th>Lleva a</th></tr>
+          <tr><td>KRB-E01</td><td>Kerbol</td><td>Alrededor de Eeloo (que orbita Sarnus), circular a 539 km de altura, inclinación 85.6°</td><td>NKA-BX0 (Nova Kirbani)</td></tr>
+          <tr><td>NKA-BX0</td><td>Nova Kirbani</td><td>Alrededor del centro de Nova Kirbani, circular a 74.9 millones de km, inclinación 85.6°</td><td>KRB-E01 (Kerbol)</td></tr>
+          <tr><td>AE-G01</td><td>Aethera</td><td>Alrededor de Aethera, a 4.74 millones de km (excentricidad 0.10), inclinación 168.4°</td><td>KOR-M05 (Kormin)</td></tr>
+          <tr><td>KOR-M05</td><td>Kormin</td><td>Alrededor de Kormin, circular a 20,000 km, inclinación 0°</td><td>AE-G01 (Aethera)</td></tr>
+          <tr><td>KER-X1</td><td>Kerr</td><td>Alrededor de Kerr, a 12.4 millones de km (excentricidad 0.13), inclinación 9.7°</td><td>SEE-K1 (Seereon)</td></tr>
+          <tr><td>SEE-K1</td><td>Seereon</td><td>Alrededor de Seereon B, a 98,765 km (excentricidad 0.2), inclinación 140°</td><td>KER-X1 (Kerr)</td></tr>
         </table>
-        <p>Desde Kerbol solo puedes saltar a Nova Kirbani. Orbel no tiene portal. Para que funcionen, en KSS2_Settings.cfg pon <code>KerbolWormhole = True</code> y <code>Wormholes = True</code>.</p>
+        <p>Para saltar tienes que pasar a entre 100 m y 30 km de altura sobre el portal (mide 10 km de radio). Desde Kerbol solo puedes saltar a Nova Kirbani. Orbel no tiene portal. Los portales están activos mientras en KSS2_Settings.cfg no tengas <code>KerbolWormhole = False</code> (el de Kerbol) ni <code>Wormholes = False</code> (los demás). Datos tomados de los .cfg de tu KSS2.</p>
       </details>
 
       <label class="check" for="kss2">
@@ -684,21 +684,21 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   // Datos físicos (mu en m³/s², R en m, alturas en km). h0 es la altura que usa el mapa.
   // ra es el apoastro de la órbita elíptica de captura del mapa; capIn dice dónde está ese nodo.
   var CUSTOM = {
-    mun: { mu: 6.5138398e10, R: 2.0e5, h0: 14, min: 8, max: 1500 },
-    minmus: { mu: 1.7658e9, R: 6.0e4, h0: 10, min: 6, max: 1300 },
-    moho: { mu: 1.6860938e11, R: 2.5e5, h0: 20, min: 8, max: 6000 },
-    eve: { mu: 8.1717302e12, R: 7.0e5, h0: 100, min: 91, atm: 90, max: 50000, ra: 85e6, capIn: 'orbit' },
-    gilly: { mu: 8.2894498e6, R: 1.3e4, h0: 10, min: 8, max: 70 },
-    duna: { mu: 3.0136321e11, R: 3.2e5, h0: 60, min: 51, atm: 50, max: 28000, ra: 48e6, capIn: 'orbit' },
-    ike: { mu: 1.8568369e10, R: 1.3e5, h0: 10, max: 600 },
-    jool: { mu: 2.82528e14, R: 6.0e6, h0: 210, min: 201, atm: 200, max: 1000000, ra: 268e6, capIn: 'orbit' },
-    laythe: { mu: 1.962e12, R: 5.0e5, h0: 60, min: 51, atm: 50, max: 2200 },
-    vall: { mu: 2.074815e11, R: 3.0e5, h0: 15, min: 8, max: 1400 },
-    tylo: { mu: 2.82528e12, R: 6.0e5, h0: 10, min: 8, max: 6500 },
-    bop: { mu: 2.4868349e9, R: 6.5e4, h0: 30, max: 600 },
-    pol: { mu: 7.2170208e8, R: 4.4e4, h0: 10, min: 7, max: 600 },
-    dres: { mu: 2.1484489e10, R: 1.38e5, h0: 12, min: 6, max: 19000 },
-    eeloo: { mu: 7.4410815e10, R: 2.1e5, h0: 10, min: 4, max: 70000 }
+    mun: { mu: 6.5138398e10, R: 2.0e5, h0: 14, min: 8, rec: 10, max: 1500 },
+    minmus: { mu: 1.7658e9, R: 6.0e4, h0: 10, min: 7, rec: 8, max: 1300 },
+    moho: { mu: 1.6860938e11, R: 2.5e5, h0: 20, min: 8, rec: 10, max: 6000 },
+    eve: { mu: 8.1717302e12, R: 7.0e5, h0: 100, min: 91, rec: 95, atm: 90, max: 50000, ra: 85e6, capIn: 'orbit' },
+    gilly: { mu: 8.2894498e6, R: 1.3e4, h0: 10, min: 8, rec: 10, max: 70 },
+    duna: { mu: 3.0136321e11, R: 3.2e5, h0: 60, min: 51, rec: 55, atm: 50, max: 28000, ra: 48e6, capIn: 'orbit' },
+    ike: { mu: 1.8568369e10, R: 1.3e5, h0: 10, min: 14, rec: 15, max: 600 },
+    jool: { mu: 2.82528e14, R: 6.0e6, h0: 210, min: 201, rec: 210, atm: 200, max: 1000000, ra: 268e6, capIn: 'orbit' },
+    laythe: { mu: 1.962e12, R: 5.0e5, h0: 60, min: 51, rec: 55, atm: 50, max: 2200 },
+    vall: { mu: 2.074815e11, R: 3.0e5, h0: 15, min: 9, rec: 12, max: 1400 },
+    tylo: { mu: 2.82528e12, R: 6.0e5, h0: 10, min: 14, rec: 15, max: 6500 },
+    bop: { mu: 2.4868349e9, R: 6.5e4, h0: 30, min: 23, rec: 25, max: 600 },
+    pol: { mu: 7.2170208e8, R: 4.4e4, h0: 10, min: 6, rec: 8, max: 600 },
+    dres: { mu: 2.1484489e10, R: 1.38e5, h0: 12, min: 7, rec: 10, max: 19000 },
+    eeloo: { mu: 7.4410815e10, R: 2.1e5, h0: 10, min: 5, rec: 10, max: 70000 }
   };
   LIST.unshift({ id: 'kerbin', name: 'Órbita de Kerbin', color: BLUE, approach: [], orbit: [], surface: [], custom: { kerbin: true, mu: 3.5316e12, R: 6.0e5, h0: 80, max: 40000 } });
   Object.keys(CUSTOM).forEach(function (id) {
@@ -816,8 +816,8 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   var PORTALS = {
     krb: { id: 'KRB-E01', sys: 'Kerbol', place: 'Eeloo (que orbita Sarnus), a 539 km de altura', pair: 'NKA-BX0' },
     nka: { id: 'NKA-BX0', sys: 'Nova Kirbani', place: 'centro de Nova Kirbani, a 74.9 millones de km', pair: 'KRB-E01', r: 74923397728, mu: 2.6705596971200005e18 },
-    ae: { id: 'GATE-AE-G01', sys: 'Aethera', place: 'Aethera, a 4.74 millones de km', pair: 'GATE-KOR-M05', r: 4739162680 },
-    kor: { id: 'GATE-KOR-M05', sys: 'Kormin', place: 'Kormin, a 20,000 km', pair: 'GATE-AE-G01', r: 20000000 }
+    ae: { id: 'AE-G01', sys: 'Aethera', place: 'Aethera, a 4.74 millones de km', pair: 'KOR-M05', r: 4739162680 },
+    kor: { id: 'KOR-M05', sys: 'Kormin', place: 'Kormin, a 20,000 km', pair: 'AE-G01', r: 20000000 }
   };
   var PORTAL_OF = { Aethera: 'ae', Kormin: 'kor' };
   function jumpNode(from, to) { return { to: 'Cerca del portal ' + to.id + ' (' + to.sys + ')', v: 0, f: 'portal', name: from.id }; }
@@ -884,9 +884,9 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       }
       note = 'Ruta por portal: Kerbol → Eeloo (portal KRB-E01) → salto → NKA-BX0 en Nova Kirbani → ' + P.d + '. ' +
         (brake ? 'Frenando en Sarnus y en órbita de Eeloo: es lo más seguro. ' : 'Pasando rasante por Sarnus y por el portal sin frenar: gasta menos, pero hay que afinar el acercamiento (entre 100 m y 30 km de altura sobre el portal). ') +
-        'Sirve Outer Planets Mod, porque el portal orbita a Eeloo, que a su vez orbita Sarnus. Los tramos dentro de Nova Kirbani son una estimación y suponen que sales del portal en su misma órbita.';
+        'Necesita Outer Planets Mod, porque el portal orbita a Eeloo, que a su vez orbita Sarnus. Los tramos dentro de Nova Kirbani son una estimación y suponen que sales del portal en su misma órbita.';
     } else if ((Bq && !A && Bq.f === 'Kormin') || (A && !Bq && A.f === 'Kormin')) {
-      // Kerbol -> (vuelo) Aethera -> portal GATE-AE-G01 => GATE-KOR-M05 -> Kormin
+      // Kerbol -> (vuelo) Aethera -> portal AE-G01 => KOR-M05 -> Kormin
       var P3 = A || Bq, K3 = A ? dst : src, AEs = PB.Aethera;
       var cr = parseFloat(s.cruise) || 0, r2 = STARSMA.Aethera, e1, e2, ttf;
       if (!cr) { var hh = pHoh(SUNMU, KSMA, r2); e1 = hh[0]; e2 = hh[1]; var at2 = (KSMA + r2) / 2; ttf = Math.PI * Math.sqrt(at2 * at2 * at2 / SUNMU); }
@@ -896,8 +896,8 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
         var s3 = Object.assign({}, s, { aero: false, sobj: kst.sobj, start: kst.start, hk: kst.hk, oAlt: kst.oAlt, dAlt: hL });
         var pl = pathLegs(K3, kst.sobj, BY.kerbin, 'orbit', s3, false), core = pl.core.slice(), n0 = core.length;
         core.push({ to: 'Escape de Kerbin rumbo a Aethera', v: Math.round(pEsc(KB.mu, KB.R + hL * 1000, e1)), f: 'escape' });
-        core.push({ to: 'Cerca del portal GATE-AE-G01 (Aethera)', v: Math.round(pEsc(AEs.mu, PORTALS.ae.r, e2)), f: 'capture' });
-        var jm = { to: 'Cerca del portal GATE-KOR-M05 (Kormin)', v: 0, f: 'portal' };
+        core.push({ to: 'Cerca del portal AE-G01 (Aethera)', v: Math.round(pEsc(AEs.mu, PORTALS.ae.r, e2)), f: 'capture' });
+        var jm = { to: 'Cerca del portal KOR-M05 (Kormin)', v: 0, f: 'portal' };
         var tl = portalDown(null, PORTALS.kor.r, P3, pObj, pAlt, short, false);
         var add = core.slice(n0).concat([jm], tl);
         return { nodes: pl.nodes.concat(add), core: pl.core.concat(add), startName: pl.startName };
@@ -905,7 +905,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       var kstB = { sobj: s.sobj, start: s.start, hk: s.hk, oAlt: s.oAlt }, kstA = { sobj: 'orbit', start: 'lko', hk: K3.id === 'kerbin' ? (s.dAlt || 80) : 80, oAlt: s.dAlt };
       function skipMatch(list) {
         if (brake) return list;
-        return list.map(function (n) { return (n.f === 'capture' && /GATE-AE-G01/.test(n.to)) ? Object.assign({}, n, { v: 0 }) : n; });
+        return list.map(function (n) { return (n.f === 'capture' && /AE-G01/.test(n.to)) ? Object.assign({}, n, { v: 0 }) : n; });
       }
       if (Bq) {
         fwd = buildK(aero, kstB, s.obj, s.dAlt); ida = skipMatch(fwd.nodes);
@@ -917,10 +917,10 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       }
       var dir = interCore(K3, Bq ? kstB : kstA, P3, Bq ? s.obj : (s.sobj === 'surface' ? 'surface' : 'orbit'), Bq ? s.dAlt : s.oAlt, s, false);
       var dirTot = sum(dir.nodes), r3 = STARSMA.Kormin;
-      var routeTxt = 'Ruta automática: ' + (K3.id === 'kerbin' ? 'Kerbin' : K3.name) + ' ⇒ (vuelo) Aethera ⇒ portal GATE-AE-G01 → GATE-KOR-M05 ⇒ Kormin ⇒ ' + P3.d;
+      var routeTxt = 'Ruta automática: ' + (K3.id === 'kerbin' ? 'Kerbin' : K3.name) + ' ⇒ (vuelo) Aethera ⇒ portal AE-G01 → KOR-M05 ⇒ Kormin ⇒ ' + P3.d;
       var tt3 = ttf;
       note = routeTxt + '. Desde Kerbol no hay portal a Kormin: el único portal de Kerbol va a Nova Kirbani, que no conecta con Kormin. Por eso lo mejor es volar a Aethera (' + ttText(ttf) + ') y cruzar su portal a Kormin. Por portales gastas más Δv que volando directo a Kormin (' + fmt(dirTot) + ' m/s sin margen), porque el portal de Kormin está muy adentro de su gravedad, pero ahorras tiempo: directo tardaría ' + ttText(dir.tt) + '. ' +
-        'El vuelo a Aethera es una estimación (sin cambios de plano ni ventanas); el portal de Aethera tiene 168.4° de inclinación.';
+        'El vuelo a Aethera es una estimación (sin cambios de plano ni ventanas); el portal AE-G01 tiene 168.4° de inclinación y una órbita algo ovalada (excentricidad 0.10), así que su distancia a Aethera varía entre 4.3 y 5.2 millones de km.';
       var t4 = sum(ida) + (vuelta ? sum(vuelta) : 0);
       return { ida: ida, vuelta: vuelta, total: t4, lo: t4, hi: t4, portal: true, viaOpt: true, flies: true, note: note };
     } else if (A && Bq && PORTAL_OF[A.f] && PORTAL_OF[Bq.f] && A.f !== Bq.f) {
@@ -930,6 +930,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       function up(sh) {
         var d = side(A, pa, s.sobj, s.oAlt, false);
         var r = reverseCore(d, nearA, false, false);
+        r.forEach(function (n) { if (/^Transferencia hacia/.test(n.to)) n.to = 'Trayectoria desde ' + A.d + ' hacia el portal ' + pa.id; });
         return r.slice(1);
       }
       var dn = side(Bq, pb, s.obj, s.dAlt, aero), jj = { to: nearB, v: 0, f: 'portal' };
@@ -939,6 +940,11 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       if (s.trip === 'redondo') {
         var dn2 = side(Bq, pb, s.obj, s.dAlt, false), up2 = up(), core2 = up2.concat([jj], dn2);
         vuelta = reverseCore(core2, startA, false, false);
+        vuelta.forEach(function (n) {
+          var m1 = /^Trayectoria desde (.+) hacia el portal/.exec(n.to), m2 = /^Transferencia hacia (.+)$/.exec(n.to);
+          if (m1) n.to = 'Transferencia hacia ' + m1[1];
+          else if (m2) n.to = 'Trayectoria desde ' + m2[1] + ' hacia el portal ' + pb.id;
+        });
       }
       note = 'Ruta por portal: ' + A.d + ' → portal ' + pa.id + ' (' + pa.sys + ') → salto → ' + pb.id + ' (' + pb.sys + ') → ' + Bq.d + '. Estimación: no incluye cambios de plano; el portal de Aethera tiene 168.4° de inclinación.';
     } else return null;
@@ -993,7 +999,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     var mx = Math.max(h0, Math.floor((x.soi - x.R) / 1000 * 0.95));
     var b = { id: 'k_' + x.n.toLowerCase(), name: x.d, color: KCOL[fi % KCOL.length], atmo: !!x.a, phys: true, pn: x.n,
       approach: [], orbit: [], surface: x.sol ? [{ to: 'Superficie de ' + x.d, v: 0, f: 'landing' }] : [],
-      custom: { mu: x.mu, R: x.R, h0: h0, max: mx, atm: x.a ? Math.round(x.ah / 1000) : undefined, min: Math.min(h0, x.a ? Math.floor(x.ah / 1000) + 1 : Math.max(1, Math.round(h0 / 2))) } };
+      custom: { mu: x.mu, R: x.R, h0: h0, max: mx, atm: x.a ? Math.round(x.ah / 1000) : undefined, min: x.a ? Math.min(h0, Math.floor(x.ah / 1000) + 1) : h0, rec: x.a ? Math.max(h0, Math.ceil(x.ah / 1000) + 5) : h0 } };
     LIST.push(b);
   });
 
@@ -1195,6 +1201,12 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     return o ? o.h : null;
   }
   function atmTxt(b) { var c = b.custom, a = c && (c.atm !== undefined ? c.atm : null); return a ? ' La atmósfera llega a ' + a + ' km, por eso no se puede bajar de ahí.' : ''; }
+  function recTxt(b, v) {
+    var c = b.custom; if (!c || c.rec === undefined || c.kerbin) return '';
+    var low = isFinite(v) && v < c.rec;
+    return ' Altura segura recomendada: ' + c.rec + ' km o más (margen sobre ' + (c.atm !== undefined ? 'la atmósfera' : 'las montañas') + ').' + (low ? ' Ojo: con ' + v + ' km vas muy justo.' : '');
+  }
+  function dflt(c) { return c.kerbin || c.rec === undefined ? c.h0 : Math.max(c.h0, c.rec); }
   function altMin(b) { var c = b.custom; return c ? (c.kerbin ? 71 : (c.min !== undefined ? c.min : c.h0)) : 0; }
   function clampAlt(b, raw) {
     var c = b.custom;
@@ -1205,12 +1217,12 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   }
   function syncAlt(b) {
     var inp = $('alt'), c = b.custom;
-    if (c) { inp.min = altMin(b); inp.max = c.max; inp.value = c.h0; }
+    if (c) { inp.min = altMin(b); inp.max = c.max; inp.value = dflt(c); }
     else { inp.value = fixedH(b) || ''; }
   }
   function syncOrig(b) {
     var inp = $('orig'), c = b.custom;
-    if (c) { inp.min = altMin(b); inp.max = c.max; inp.value = c.h0; }
+    if (c) { inp.min = altMin(b); inp.max = c.max; inp.value = dflt(c); }
     else { inp.value = fixedH(b) || ''; }
   }
   function updateAltUi(b, orbitMode) {
@@ -1223,7 +1235,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       hint.textContent = hh ? 'Este destino usa la altura del mapa (' + hh + ' km).' : 'Este destino no tiene altura de órbita.';
       return;
     }
-    hint.textContent = 'Altura del mapa: ' + c.h0 + ' km. Puedes poner de ' + altMin(b) + ' a ' + fmt(c.max) + ' km.' + atmTxt(b);
+    hint.textContent = 'Altura del mapa: ' + c.h0 + ' km. Puedes poner de ' + altMin(b) + ' a ' + fmt(c.max) + ' km.' + atmTxt(b) + recTxt(b, parseFloat($('alt').value));
   }
   function updateOrigUi(b, s) {
     var c = b.custom, hint = $('origHint'), isK = b.id === 'kerbin';
@@ -1242,7 +1254,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       hint.textContent = hh ? 'Este cuerpo usa la altura del mapa (' + hh + ' km).' : 'Este cuerpo no tiene altura de órbita.';
       return;
     }
-    hint.textContent = (isK ? 'El mapa usa 80 km. ' : 'Altura del mapa: ' + c.h0 + ' km. ') + 'Puedes poner de ' + altMin(b) + ' a ' + fmt(c.max) + ' km.' + atmTxt(b);
+    hint.textContent = (isK ? 'El mapa usa 80 km. ' : 'Altura del mapa: ' + c.h0 + ' km. ') + 'Puedes poner de ' + altMin(b) + ' a ' + fmt(c.max) + ' km.' + atmTxt(b) + recTxt(b, parseFloat($('orig').value));
   }
 
   function render() {
@@ -1371,7 +1383,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   $('kss2').addEventListener('change', fillSelect);
   $('orig').addEventListener('input', render);
   $('orig').addEventListener('change', function () { var v = clampAlt(BY[$('src').value], $('orig').value); if (v !== null) $('orig').value = v; });
-  $('origReset').addEventListener('click', function () { var b = BY[$('src').value]; if (b.custom) $('orig').value = b.custom.h0; render(); });
+  $('origReset').addEventListener('click', function () { var b = BY[$('src').value]; if (b.custom) $('orig').value = dflt(b.custom); render(); });
   $('alt').addEventListener('input', render);
   $('alt').addEventListener('change', function () {
     var v = clampAlt(BY[$('dest').value], $('alt').value);
@@ -1379,7 +1391,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   });
   $('altReset').addEventListener('click', function () {
     var b = BY[$('dest').value];
-    if (b.custom) $('alt').value = b.custom.h0;
+    if (b.custom) $('alt').value = dflt(b.custom);
     render();
   });
 
