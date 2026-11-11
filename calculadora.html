@@ -613,7 +613,13 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   function cap(n, v) { return { to: 'Captura elíptica en ' + n, v: v, f: 'capture' }; }
   function orb(n, km, v) { return { to: 'Órbita baja de ' + n + ' (' + km + ' km)', v: v, f: 'orbit', h: km }; }
   function sur(n, v) { return [{ to: 'Superficie de ' + n, v: v, f: 'landing' }]; }
-  function ell(n, d, v) { return { to: 'Captura elíptica en ' + n + ' (' + d + ')', v: v, f: 'capture' }; }
+  // Distancia en km y en metros, p. ej. "3,500 km / 3,500,000 m"
+  function dkm(km) { return fmt(km) + ' km / ' + fmt(Math.round(km * 1000)) + ' m'; }
+  function ell(n, d, v) {
+    var m = /^([\d.]+)\s*(Mm|km)$/.exec(d);
+    if (m) d = dkm(parseFloat(m[1]) * (m[2] === 'Mm' ? 1000 : 1));
+    return { to: 'Captura elíptica en ' + n + ' (' + d + ')', v: v, f: 'capture' };
+  }
 
   var eveT = [SOI, enc('Eve', 90), cap('Eve', 80)];
   var dunaT = [SOI, enc('Duna', 130), cap('Duna', 250)];
@@ -645,7 +651,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
   }
 
   var LIST = [
-    { id: 'keo', name: 'Órbita keoestacionaria', color: BLUE, approach: [{ to: 'Órbita keoestacionaria (2.868 Mm)', v: 1115, f: 'orbitchange' }], orbit: [], surface: [] },
+    { id: 'keo', name: 'Órbita keoestacionaria', color: BLUE, approach: [{ to: 'Órbita keoestacionaria (' + dkm(2868) + ')', v: 1115, f: 'orbitchange' }], orbit: [], surface: [] },
     { id: 'mun', name: 'Mun', color: BLUE, approach: [{ to: 'Encuentro con Mun', v: 860, k: true, f: 'transfer' }], orbit: [orb('Mun', 14, 280)], surface: sur('Mun', 580) },
     { id: 'minmus', name: 'Minmus', color: TEAL, approach: [{ to: 'Encuentro con Minmus', v: 930, k: true, f: 'transfer' }], orbit: [orb('Minmus', 10, 150)], surface: sur('Minmus', 180) },
     { id: 'moho', name: 'Moho', color: BROWN, approach: [SOI, enc('Moho', 760)], orbit: [orb('Moho', 20, 2400)], surface: sur('Moho', 870) },
@@ -661,7 +667,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     { id: 'pol', name: 'Pol', color: GREEN, approach: joolT.concat([enc('Pol', 160)]), orbit: [orb('Pol', 10, 810)], surface: sur('Pol', 130) },
     { id: 'dres', name: 'Dres', color: GREY, approach: [SOI, enc('Dres', 610)], orbit: [orb('Dres', 12, 1300)], surface: sur('Dres', 430) },
     { id: 'eeloo', name: 'Eeloo', color: CYAN, approach: [SOI, enc('Eeloo', 1140)], orbit: [orb('Eeloo', 10, 1370)], surface: sur('Eeloo', 620) },
-    { id: 'kerbol', name: 'Kerbol (el Sol)', color: GOLD, approach: [SOI, { to: 'Órbita elíptica de Kerbol (610 km – 13 600 Mm)', v: 6000, f: 'transfer' }], orbit: [{ to: 'Órbita baja de Kerbol (610 km)', v: 13700, f: 'orbit' }], surface: [{ to: 'Superficie de Kerbol', v: 67000, f: 'landing' }] },
+    { id: 'kerbol', name: 'Kerbol (el Sol)', color: GOLD, approach: [SOI, { to: 'Órbita elíptica de Kerbol (610 km – 13,600,000 km)', v: 6000, f: 'transfer' }], orbit: [{ to: 'Órbita baja de Kerbol (610 km)', v: 13700, f: 'orbit' }], surface: [{ to: 'Superficie de Kerbol', v: 67000, f: 'landing' }] },
     // Outer Planets Mod (valores del mapa OPM 1.12.5)
     { id: 'sarnus', name: 'Sarnus', color: PINK, approach: sarnusT, orbit: [orb('Sarnus', 590, 1550)], surface: [] },
     { id: 'hale', name: 'Hale', color: PINK, approach: sarnusT.concat([mid('Hale', 1050), ell('Hale', '7.5 km', 420)]), orbit: [orb('Hale', 10, 10)], surface: sur('Hale', 20) },
