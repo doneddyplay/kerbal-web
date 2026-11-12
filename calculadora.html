@@ -705,7 +705,24 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     bop: { mu: 2.4868349e9, R: 6.5e4, h0: 30, min: 23, rec: 25, max: 600 },
     pol: { mu: 7.2170208e8, R: 4.4e4, h0: 10, min: 6, rec: 8, max: 600 },
     dres: { mu: 2.1484489e10, R: 1.38e5, h0: 12, min: 7, rec: 10, max: 19000 },
-    eeloo: { mu: 7.4410815e10, R: 2.1e5, h0: 10, min: 5, rec: 10, max: 70000 }
+    eeloo: { mu: 7.4410815e10, R: 2.1e5, h0: 10, min: 5, rec: 10, max: 70000 },
+    // Outer Planets Mod (datos de tus .cfg). Mínimos de las lunas sin atmósfera: la mitad de la altura del mapa (sin datos de montañas).
+    sarnus: { mu: 8.208970195e+13, R: 5.3e+06, h0: 590, min: 581, rec: 590, atm: 580, max: 1600000, capIn: 'approach', ra: 8.8e+06 },
+    hale: { mu: 811990.62, R: 6000, h0: 10, min: 5, rec: 10, max: 25, capIn: 'approach' },
+    ovok: { mu: 13258590.8, R: 26000, h0: 20, min: 10, rec: 20, max: 56, capIn: 'approach' },
+    'eeloo-opm': { mu: 7.441081453e+10, R: 210000, h0: 10, min: 5, rec: 10, max: 700, capIn: 'approach' },
+    slate: { mu: 1.978856445e+12, R: 540000, h0: 20, min: 10, rec: 20, max: 5800, capIn: 'approach' },
+    tekto: { mu: 1.924409924e+11, R: 280000, h0: 100, min: 96, rec: 100, atm: 95, max: 5200, capIn: 'approach' },
+    urlum: { mu: 1.194457377e+13, R: 2.177e+06, h0: 330, min: 326, rec: 330, atm: 325, max: 1500000, capIn: 'approach', ra: 3.627e+06 },
+    wal: { mu: 4.967362424e+11, R: 370000, h0: 30, min: 15, rec: 30, max: 11000, capIn: 'approach' },
+    tal: { mu: 213588837, R: 22000, h0: 20, min: 10, rec: 20, max: 84, capIn: 'approach' },
+    priax: { mu: 3383176570, R: 74000, h0: 40, min: 20, rec: 40, max: 270, capIn: 'approach' },
+    polta: { mu: 9.01819534e+10, R: 220000, h0: 20, min: 10, rec: 20, max: 1000, capIn: 'approach' },
+    neidon: { mu: 1.416788153e+13, R: 2.145e+06, h0: 270, min: 261, rec: 270, atm: 260, max: 2500000, capIn: 'approach', ra: 3.645e+06 },
+    nissee: { mu: 397169325, R: 30000, h0: 20, min: 10, rec: 20, max: 4400, capIn: 'approach' },
+    thatmo: { mu: 1.860975805e+11, R: 286000, h0: 40, min: 36, rec: 40, atm: 35, max: 3400, capIn: 'approach' },
+    plock: { mu: 5.184489501e+10, R: 189000, h0: 10, min: 5, rec: 10, max: 350000, capIn: 'approach' },
+    karen: { mu: 4681804201, R: 85050, h0: 10, min: 5, rec: 10, max: 560, capIn: 'approach' }
   };
   LIST.unshift({ id: 'kerbin', name: 'Órbita de Kerbin', color: BLUE, approach: [], orbit: [], surface: [], custom: { kerbin: true, mu: 3.5316e12, R: 6.0e5, h0: 80, max: 40000 } });
   Object.keys(CUSTOM).forEach(function (id) {
@@ -1054,7 +1071,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     }
     var orbN = b.orbit.filter(function (n) { return n.f === 'orbit'; })[0];
     var capArr = c.capIn === 'orbit' ? b.orbit : (c.capIn === 'approach' ? b.approach : []);
-    var capN = capArr.filter(function (n) { return n.f === 'capture'; })[0];
+    var capN = capArr.filter(function (n) { return n.f === 'capture'; }).pop();
     if (!orbN) return b;
     var r0 = c.R + c.h0 * 1000, D0 = orbN.v + (capN ? capN.v : 0);
     var vinf2 = Math.pow(Math.sqrt(c.mu / r0) + D0, 2) - 2 * c.mu / r0;
@@ -1070,7 +1087,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     function swap(arr) {
       return arr.map(function (n) {
         if (n === orbN) return Object.assign({}, n, { to: n.to.replace(/Órbita baja de (.*) \(\d+ km\)/, 'Órbita circular de $1 (' + h + ' km)'), v: newOrb, h: h });
-        if (capN && n === capN) return Object.assign({}, n, { to: n.to.replace(/\((\d+) km/, '(' + h + ' km'), v: newCap });
+        if (capN && n === capN) return Object.assign({}, n, { to: n.to.indexOf(' / ') > -1 ? n.to : n.to.replace(/\((\d+) km/, '(' + h + ' km'), v: newCap });
         return n;
       });
     }
@@ -1251,7 +1268,7 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     if (!orbitMode) { hint.textContent = 'Para aterrizar se usa la órbita baja del mapa.'; return; }
     if (!c) {
       var hh = fixedH(b);
-      hint.textContent = hh ? 'Este destino usa la altura del mapa (' + hh + ' km).' : 'Este destino no tiene altura de órbita.';
+      hint.textContent = b.id === 'keo' ? 'La órbita keoestacionaria es una altura fija (' + (hh || '2,868') + ' km): por definición no se puede cambiar.' : (b.id === 'kerbol' ? 'Para el Sol el mapa trae una sola órbita (' + (hh || 610) + ' km) y no hay datos para calcular otras alturas.' : (hh ? 'Este destino usa la altura del mapa (' + hh + ' km).' : 'Este destino no tiene altura de órbita.'));
       return;
     }
     hint.textContent = 'Altura del mapa: ' + c.h0 + ' km. Puedes poner de ' + altMin(b) + ' a ' + fmt(c.max) + ' km.' + atmTxt(b) + recTxt(b, parseFloat($('alt').value));
