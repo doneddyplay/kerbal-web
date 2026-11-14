@@ -371,13 +371,13 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
 .portals th,.portals td{text-align:left;padding:4px 6px;border-bottom:1px solid rgba(128,128,128,.35);vertical-align:top}
 .portals p{margin:6px 0 0;font-size:.85em}
 @media(max-width:600px){.portals table{display:block;overflow-x:auto}}
-</style>
+<style>.cargo-seg{grid-template-columns:repeat(3,1fr)}.cargo-seg span{padding-left:4px;padding-right:4px}.mkguide .go + .hint + .go{margin-top:10px}</style>
 </head>
 <body>
 <div class="scene" aria-hidden="true"></div>
 
 <div class="wrap">
-  <nav class="nav" aria-label="Secciones"><span class="brand">Kerbal Δv</span><a class="tab" href="index.html">Inicio</a><a class="tab" href="calculadora.html" aria-current="page">Calculadora Δv</a><a class="tab" href="guia.html">Guía MechJeb</a></nav>
+  <nav class="nav" aria-label="Secciones"><span class="brand">Kerbal Δv</span><a class="tab" href="index.html">Inicio</a><a class="tab" href="calculadora.html" aria-current="page">Calculadora Δv</a><a class="tab" href="plano.html">Plano del cohete</a><a class="tab" href="guia.html">Guía MechJeb</a></nav>
   <div class="top">
     <div class="hud">
       <p class="t">Centro espacial Kerbal</p>
@@ -514,6 +514,15 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
         </select>
       </div>
 
+      <fieldset>
+        <legend class="lab">Tipo de carga</legend>
+        <div class="seg cargo-seg">
+          <label><input type="radio" name="cargo" id="cargo-radar" value="radar"><span>Radar</span></label>
+          <label><input type="radio" name="cargo" id="cargo-com" value="com" checked><span>Comunicación</span></label>
+          <label><input type="radio" name="cargo" id="cargo-est" value="est"><span>Estación</span></label>
+        </div>
+        <span class="hint">Sirve para el plano del cohete: según lo que lleves, cambian las piezas de arriba.</span>
+      </fieldset>
       <div>
         <label class="lab" for="margin">Margen extra de combustible</label>
         <select id="margin">
@@ -555,6 +564,8 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
       <div class="mkguide">
         <a class="go" id="mkGuide" href="guia.html">Armar mi guía con esta misión</a>
         <span class="hint" id="mkGuideNote"></span>
+        <a class="go" id="mkPlano" href="plano.html">Ver el plano del cohete</a>
+        <span class="hint" id="mkPlanoNote"></span>
       </div>
       <div id="routes"></div>
       <details class="phases">
@@ -1360,6 +1371,19 @@ select option, select optgroup { background: var(--panel); color: var(--ink); }
     } else {
       mg.href = 'guia.html'; mg.classList.add('off'); mg.setAttribute('aria-disabled', 'true');
       mgn.textContent = isK ? 'La guía todavía no tiene pasos para este destino. Abre la guía y elige uno parecido.' : 'La guía solo tiene pasos para viajes que salen de Kerbin.';
+    }
+    var cg = document.querySelector('input[name="cargo"]:checked');
+    var mis = { cargo: cg ? cg.value : 'com', from: srcTxt, to: b.name, obj: $('hObj').textContent, trip: s.trip, pad: !!needsAscent, isK: isK, pct: pct, total: p.total, totalM: tm, aero: s.aero,
+      ida: (p.ida || []).filter(function (n) { return !n.start; }).map(function (n) { return [n.f || '', n.to, mv(n.v, pct), n.back ? 1 : 0]; }),
+      vuelta: (p.vuelta || []).filter(function (n) { return !n.start; }).map(function (n) { return [n.f || '', n.to, mv(n.v, pct), n.back ? 1 : 0]; }) };
+    var mp = $('mkPlano'), mpn = $('mkPlanoNote');
+    if (p.bad) { mp.href = 'plano.html'; mp.classList.add('off'); mp.setAttribute('aria-disabled', 'true'); mpn.textContent = 'Esta ruta no se puede calcular, así que no hay plano.'; }
+    else {
+      var js = JSON.stringify(mis);
+      try { localStorage.setItem('kerbalMision', js); } catch (e) {}
+      mp.href = 'plano.html?m=' + encodeURIComponent(js);
+      mp.classList.remove('off'); mp.removeAttribute('aria-disabled');
+      mpn.textContent = 'Arma el diseño del cohete con estos ' + fmt(tm) + ' m/s y tu carga (' + ({ radar: 'radar', com: 'comunicación', est: 'estación' }[mis.cargo]) + ').';
     }
     var est = $('estNote');
     est.hidden = isK || dK;
